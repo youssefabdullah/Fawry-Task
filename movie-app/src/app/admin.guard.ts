@@ -11,7 +11,7 @@ export class AdminGuard implements CanActivate {
   canActivate(): boolean {
     const userRole = localStorage.getItem('userRole');
 
-    if (userRole === 'admin') {
+    if (userRole === 'ADMIN') {
       return true;
     } else {
       this.router.navigate(['/404']); // Redirect to 404 page

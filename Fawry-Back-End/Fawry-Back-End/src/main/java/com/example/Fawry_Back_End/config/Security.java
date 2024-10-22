@@ -20,6 +20,9 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @EnableWebSecurity
 @Configuration
@@ -34,22 +37,38 @@ public class Security  {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         Customizer<HttpBasicConfigurer<HttpSecurity>> httpBasicCustomizer = null;
         httpSecurity
-                .csrf(csrf -> csrf.disable()) // Disable CSRF protection
-                .authorizeRequests()
-                .requestMatchers("/login","/signup").permitAll()
-                .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
-                .requestMatchers("/user/**").hasAnyAuthority("USER","ADMIN")
-                .anyRequest()
-                .authenticated()
-                .and()
-                .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider(authenticationProvider())
-                .addFilterBefore(jwtAthFilter, UsernamePasswordAuthenticationFilter.class);
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))  // Enable CORS with custom configuration
+                .csrf(csrf -> csrf.disable())  // Disable CSRF protection for stateless JWT
+                .authorizeRequests(authorize -> authorize
+                        .requestMatchers("/login", "/signup").permitAll()  // Allow public access to login and signup
+                        .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")  // Protect admin endpoints
+                        .requestMatchers("/user/**").hasAnyAuthority("USER", "ADMIN")  // Protect user endpoints for USER or ADMIN roles
+                        .anyRequest().authenticated()  // All other requests require authentication
+                )
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))  // Use stateless session
+                .authenticationProvider(authenticationProvider())  // Configure custom authentication provider
+                .addFilterBefore(jwtAthFilter, UsernamePasswordAuthenticationFilter.class);  // Add JWT filter before UsernamePasswordAuthenticationFilter
 
         return httpSecurity.build();
 
     }
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration corsConfig = new CorsConfiguration();
+        corsConfig.addAllowedOrigin("http://localhost:4200");  // Allow Angular frontend origin
+        corsConfig.addAllowedHeader("Authorization");  // Allow Authorization header
+        corsConfig.addAllowedHeader("Content-Type");  // Allow Content-Type header
+        corsConfig.addAllowedMethod("GET");  // Allow GET method
+        corsConfig.addAllowedMethod("POST");  // Allow POST method
+        corsConfig.addAllowedMethod("PUT");  // Allow PUT method
+        corsConfig.addAllowedMethod("DELETE");  // Allow DELETE method
+        corsConfig.addAllowedMethod("OPTIONS");  // Allow OPTIONS method for preflight requests
+        corsConfig.setAllowCredentials(true);  // Allow credentials (Authorization header)
 
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfig);  // Apply CORS configuration to all endpoints
+        return source;
+    }
     @Bean
     public AuthenticationProvider authenticationProvider() {
         final DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();

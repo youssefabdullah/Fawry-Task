@@ -20,24 +20,25 @@ export class UserDashboardComponent implements OnInit {
   }
 
   fetchMovies(): void {
-    const token = localStorage.getItem('accessToken') as string; // Cast token to string
+    const token = localStorage.getItem('accessToken') as string;
 
     if (token) {
-      const headers = new HttpHeaders({
-        'Authorization': `Bearer ${token}` // Ensure token is passed as string
-      });
-
-      this.http.get<any[]>('http://localhost:8080/user/getAllMovies', { headers }).subscribe(
-        (response) => {
-          console.log(response)
-          this.movies = response;
-        },
-        (error) => {
-          console.error('Error fetching movies:', error);
+      fetch('http://localhost:8080/user/getAllMovies', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`
         }
-      );
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Movies:', data);
+        this.movies = data;
+      })
+      .catch(error => {
+        console.error('Error fetching movies:', error);
+      });
     } else {
       console.error('No auth token found');
     }
-  }
+  } 
 }

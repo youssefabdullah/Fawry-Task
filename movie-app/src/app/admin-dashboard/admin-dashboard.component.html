@@ -1,2 +1,55 @@
-<h2>Welcome to the Admin Dashboard</h2>
-    <p>Here you can manage administrative tasks.</p>
+<div class="admin-dashboard">
+  <h1>Admin Dashboard</h1>
+
+  <!-- Movie Title Form -->
+  <form (submit)="onSubmit()">
+    <div class="form-group">
+      <label for="movieTitle">Enter Movie Title:</label>
+      <input type="text" id="movieTitle" [(ngModel)]="movieTitle" name="movieTitle" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Movie</button>
+  </form>
+
+  <!-- Display Success or Error Messages -->
+  <div *ngIf="message" class="alert" [ngClass]="{'alert-success': isSuccess, 'alert-danger': !isSuccess}">
+    {{ message }}
+  </div>
+</div>
+
+
+<table class="table table-striped" *ngIf="movies.length > 0">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Poster</th> <!-- New column for the poster -->
+      <th>IMDB Rating</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let movie of movies">
+      <td>{{ movie.id }}</td>
+      <td>{{ movie.title }}</td>
+      <td>
+        <!-- Display the movie's poster -->
+        <img [src]="movie.poster" alt="{{ movie.title }} Poster" class="poster-img" />
+      </td>
+      <td>{{ movie.imdbRating }}</td>
+      <td>
+        <button (click)="deleteMovie(movie.id)" class="btn btn-danger">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- No movies message -->
+<p *ngIf="movies.length === 0">No movies available.</p>
+
+<!-- Display Success or Error Messages -->
+<div *ngIf="message" class="alert" [ngClass]="{'alert-success': isSuccess, 'alert-danger': !isSuccess}">
+  {{ message }}
+</div>
+
+
