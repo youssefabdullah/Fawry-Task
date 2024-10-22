@@ -11,12 +11,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin("http://localhost:4200")
 public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -38,6 +40,7 @@ public class AuthController {
         if (user != null) {
 
             authenticationResponse.setResponseCode(200);
+            authenticationResponse.setRole(String.valueOf(user.getAuthorities().stream().findAny().get()));
             authenticationResponse.setAccessToken(jwtUtil.generateToken(user));
             authenticationResponse.setMessage("You are login");
             return ResponseEntity.ok(authenticationResponse);

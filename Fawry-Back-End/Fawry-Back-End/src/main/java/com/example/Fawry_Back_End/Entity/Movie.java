@@ -15,13 +15,13 @@ import lombok.NoArgsConstructor;
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String title;
-    private String imdbID;
-    private String poster;
-    private String country;
-    private String language;
-    private String plot;
-    private String imdbRating;
+        private Integer id;
+        private String title;
+        private String imdbID;
+        private String poster;
+        private String country;
+        private String language;
+        private String plot;
+        private String imdbRating;
 
 }
