@@ -1,4 +1,4 @@
-# Fawry-Task
+## Fawry-Task
 # Backend (Spring Boot)
 - 1-Navigate to the backend directory:
    - cd fawry-backend
@@ -18,3 +18,10 @@ Here is a list of main API endpoints provided by the Spring Boot backend:
 - POST	/login	Make login
 - POST	/signup	Make signup
 - GET	/user/getAllMovies	Featch data
+# Front End (Angular)
+- 1- Navigate to the frot end
+  - cd movie-app
+- 2 - Install Dependancy 
+   - npm i
+- 3- run project 
+   - ng serve
