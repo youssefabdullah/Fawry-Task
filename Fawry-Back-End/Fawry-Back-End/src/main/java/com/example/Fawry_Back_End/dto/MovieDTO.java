@@ -1,5 +1,6 @@
-package com.example.Fawry_Back_End.Model;
+package com.example.Fawry_Back_End.dto;
 
+import com.example.Fawry_Back_End.model.Rating;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

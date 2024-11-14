@@ -1,9 +1,7 @@
-package com.example.Fawry_Back_End.Controller;
+package com.example.Fawry_Back_End.controller;
 
-import com.example.Fawry_Back_End.Entity.Movie;
-import com.example.Fawry_Back_End.Model.Response;
-import com.example.Fawry_Back_End.Service.serviceImpl.MovieServiceImpl;
-import com.example.Fawry_Back_End.Service.serviceImpl.OmdbApiServiceImpl;
+import com.example.Fawry_Back_End.dto.Response;
+import com.example.Fawry_Back_End.service.serviceImpl.MovieServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +15,11 @@ public class AdminController {
     @PostMapping("/saveMovie/{title}")
     public ResponseEntity<Response> addMovie(@PathVariable("title") String title) {
         service.saveMovie(title);
-            return  ResponseEntity.ok(new Response(200,"Add Succeful"));
+            return  ResponseEntity.ok(new Response("200"));
     }
     @DeleteMapping("/deleteMovie/{id}")
     public ResponseEntity<Response> deleteMovie(@PathVariable("id") int id){
         service.deleteMovie(id);
-        return  ResponseEntity.ok(new Response(200,"Delete Succeful"));
+        return  ResponseEntity.ok(new Response("200"));
     }
 }

@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,NavbarComponent,CommonModule],
+  imports: [RouterOutlet, NavbarComponent, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -26,7 +26,11 @@ export class AppComponent {
     const currentRoute = this.router.url;
     if (currentRoute === '/login') {
       this.showNavbar = false;  // Hide navbar on the login page
-    } else {
+    }
+    else if (currentRoute === '/signup') {
+      this.showNavbar = false;  // Hide navbar on the login page
+    }
+    else {
       this.showNavbar = true;  // Show navbar on all other pages
     }
   }

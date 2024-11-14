@@ -1,7 +1,7 @@
 package com.example.Fawry_Back_End.config;
 
 
-import com.example.Fawry_Back_End.Service.UserService;
+import com.example.Fawry_Back_End.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,7 +35,7 @@ public class JwtAthFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-        System.out.println(authHeader);
+
         jwtToken = authHeader.substring(7);
 
         userEmail = jwtUtile.extractUsername(jwtToken);
@@ -54,6 +54,7 @@ public class JwtAthFilter extends OncePerRequestFilter {
 
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
+            ///error 403
         }
         filterChain.doFilter(request, response);
     }

@@ -1,4 +1,4 @@
-package com.example.Fawry_Back_End.Model;
+package com.example.Fawry_Back_End.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

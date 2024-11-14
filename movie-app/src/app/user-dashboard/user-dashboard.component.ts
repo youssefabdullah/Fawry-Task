@@ -32,7 +32,7 @@ export class UserDashboardComponent implements OnInit {
       .then(response => response.json())
       .then(data => {
         console.log('Movies:', data);
-        this.movies = data;
+        this.movies = data.data;
       })
       .catch(error => {
         console.error('Error fetching movies:', error);
@@ -40,5 +40,5 @@ export class UserDashboardComponent implements OnInit {
     } else {
       console.error('No auth token found');
     }
-  } 
+  }
 }

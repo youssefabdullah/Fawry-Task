@@ -1,6 +1,6 @@
-package com.example.Fawry_Back_End.Repository;
+package com.example.Fawry_Back_End.repository;
 
-import com.example.Fawry_Back_End.Entity.Users;
+import com.example.Fawry_Back_End.model.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

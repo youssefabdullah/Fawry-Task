@@ -1,6 +1,6 @@
-package com.example.Fawry_Back_End.Service.serviceImpl;
+package com.example.Fawry_Back_End.service.serviceImpl;
 
-import com.example.Fawry_Back_End.Model.MovieDTO;
+import com.example.Fawry_Back_End.dto.MovieDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -14,6 +14,7 @@ public class OmdbApiServiceImpl  {
 
     @Autowired
     private RestTemplate restTemplate;
+
     public MovieDTO getMovieByTitle(String title){
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(OMDB_URL)
                 .queryParam("t", title)

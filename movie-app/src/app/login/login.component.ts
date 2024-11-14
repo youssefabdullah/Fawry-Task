@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { RouterModule,Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  imports: [FormsModule] // Add FormsModule here
+  imports: [FormsModule,RouterModule] // Add FormsModule here
 })
 export class LoginComponent {
   username: string = '';
@@ -26,8 +26,8 @@ export class LoginComponent {
 
       const data = await response.json();
 
-      if (data.responseCode === 200) {
-        alert('Login successful! Access Token: ' + data.accessToken+ '  '+data.role);
+      if (data.responseCode === "200") {
+        alert('Login successful! ');
         localStorage.setItem('accessToken', data.accessToken);
         localStorage.setItem('userRole', data.role);
         if (data.role === 'ADMIN') {

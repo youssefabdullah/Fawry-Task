@@ -1,9 +1,11 @@
-package com.example.Fawry_Back_End.Service.serviceImpl;
+package com.example.Fawry_Back_End.service.serviceImpl;
 
-import com.example.Fawry_Back_End.Entity.Movie;
-import com.example.Fawry_Back_End.Model.MovieDTO;
-import com.example.Fawry_Back_End.Repository.MovieRepository;
-import com.example.Fawry_Back_End.Service.MovieService;
+import com.example.Fawry_Back_End.constant.ResponseCode;
+import com.example.Fawry_Back_End.dto.response.MovieResponse;
+import com.example.Fawry_Back_End.model.Movie;
+import com.example.Fawry_Back_End.dto.MovieDTO;
+import com.example.Fawry_Back_End.repository.MovieRepository;
+import com.example.Fawry_Back_End.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,7 @@ public class MovieServiceImpl implements MovieService {
         }
         return ResponseEntity.badRequest().body("Movie not found in OMDB");
     }
+    //
     protected Movie mapperMovieDtoToMovie(MovieDTO dto){
         return Movie.builder()
                 .title(dto.getTitle())
@@ -38,11 +41,14 @@ public class MovieServiceImpl implements MovieService {
                 .imdbRating(dto.getImdbRating())
                 .build();
     }
-    public List<Movie> getAllMovies(){
-        return movieRepository.findAll();
+    public MovieResponse getAllMovies(){
+        MovieResponse movieResponse = new MovieResponse(ResponseCode.SUCCESS);
+        movieResponse.setMovies(movieRepository.findAll());
+        return movieResponse;
     }
     public void deleteMovie(int id){
         Optional<Movie> movie = movieRepository.findById(id);
+//        movie.orElseThrow()
         movieRepository.deleteById(id);
     }
 }

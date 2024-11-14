@@ -1,4 +1,4 @@
-package com.example.Fawry_Back_End.Entity;
+package com.example.Fawry_Back_End.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

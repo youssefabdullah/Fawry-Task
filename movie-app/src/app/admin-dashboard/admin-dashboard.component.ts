@@ -76,21 +76,20 @@ export class AdminDashboardComponent implements OnInit{
     const token = localStorage.getItem('accessToken');  // Get the token from local storage
 
     if (token) {
-      const headers = new HttpHeaders({
-        'Authorization': `Bearer ${token}`  // Attach the Authorization token
-      });
-
-      // Fetch movies from the API
-      this.http.get<any[]>('http://localhost:8080/user/getAllMovies', { headers }).subscribe(
-        (response) => {
-          this.movies = response;  // Store the movies in the array
-        },
-        (error) => {
-          console.error('Error fetching movies:', error);
-          this.message1 = 'Error fetching movies.';
-          this.isSuccess1 = false;
+      fetch('http://localhost:8080/user/getAllMovies', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`
         }
-      );
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Movies:', data);
+        this.movies = data.data;
+      })
+      .catch(error => {
+        console.error('Error fetching movies:', error);
+      });
     } else {
       this.message1 = 'No token found';
       this.isSuccess1 = false;

@@ -1,6 +1,6 @@
 package com.example.Fawry_Back_End.config;
 
-import com.example.Fawry_Back_End.Service.UserService;
+import com.example.Fawry_Back_End.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,7 +40,7 @@ public class Security  {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))  // Enable CORS with custom configuration
                 .csrf(csrf -> csrf.disable())  // Disable CSRF protection for stateless JWT
                 .authorizeRequests(authorize -> authorize
-                        .requestMatchers("/login", "/signup").permitAll()  // Allow public access to login and signup
+                        .requestMatchers("/login", "/signup", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()  // Allow public access to login and signup
                         .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")  // Protect admin endpoints
                         .requestMatchers("/user/**").hasAnyAuthority("USER", "ADMIN")  // Protect user endpoints for USER or ADMIN roles
                         .anyRequest().authenticated()  // All other requests require authentication
